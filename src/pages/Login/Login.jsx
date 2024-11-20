@@ -1,6 +1,15 @@
 import React from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { login } from "../../features/Action/authAction";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const { register , handleSubmit } = useForm();
+
+  const submitForm =(data)=>{
+    dispatch(login(data))
+  }
   return (
     <section class="bg-gray-50 dark:bg-gray-900">
       <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -20,7 +29,7 @@ const Login = () => {
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
-            <form class="space-y-4 md:space-y-6">
+            <form class="space-y-4 md:space-y-6" onSubmit={handleSubmit(submitForm)}>
               <div>
                 <label
                   for="email"
@@ -32,6 +41,7 @@ const Login = () => {
                   type="email"
                   name="email"
                   id="email"
+                  {...register("email")}
                   class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                 />
@@ -48,6 +58,7 @@ const Login = () => {
                   name="password"
                   id="password"
                   placeholder="••••••••"
+                  {...register("password")}
                   class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
