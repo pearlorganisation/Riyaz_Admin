@@ -4,6 +4,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import { useSelector } from "react-redux";
 import Layout from "../components/Layouts/Layout"
 import Users from "../pages/Users/users";
+import Contacts from "../pages/Contacts/Contacts";
 export const AppRoutes = () => {
   const { isAdminLoggedIn } = useSelector((state) => state?.auth);
 
@@ -14,7 +15,8 @@ export const AppRoutes = () => {
       children: isAdminLoggedIn ?
         [
           { index: true, element: <Dashboard /> },
-          {path:"users", element:<Users />}
+          {path:"users", element:<Users />},
+          {path:"contacts", element:<Contacts />}
         ]:[]
     },
   ]);

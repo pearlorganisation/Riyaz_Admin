@@ -41,23 +41,15 @@ const Sidebar = () => {
 
                   {/*------------------------------Contact-------------------------------------*/}
                   <div className="mb-4">
-                      <div
-                          onClick={() => setIsContactOpen(!isContactOpen)}
-                          className="flex justify-between items-center cursor-pointer hover:text-gray-300"
-                      >
-                          <span>Contacts</span>
-                          {isContactOpen ? <FaChevronUp /> : <FaChevronDown />}
-                      </div>
-                      {isContactOpen && (
-                          <ul className="mt-2 ml-4 space-y-2">
-                              <Link to="contact">
-                                  <li className="hover:text-gray-300  cursor-pointer">
-                                      Contact List
-                                  </li>
-                              </Link>
-                          </ul>
-                      )}
+                      <Link to="contacts">
+                          <div className="flex justify-between items-center cursor-pointer hover:text-gray-300">
+                              <span>Contacts</span>
+                          </div>
+                      </Link>
+
+
                   </div>
+
               </nav>
           </aside>
       </div>
