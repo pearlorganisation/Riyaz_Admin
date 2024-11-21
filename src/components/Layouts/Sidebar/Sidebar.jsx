@@ -3,8 +3,7 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
-    const [isPackageOpen, setIsPackageOpen] = useState(false);
-    const [isPartnerOpen, setIsPartnerOpen] = useState(false);
+  
     const [isContactOpen, setIsContactOpen] = useState(false);
   return (
       <div>
@@ -27,7 +26,7 @@ const Sidebar = () => {
 
                   {/**-----------------------------Users Section---------------*/}
                   <div className="mb-4">
-                      <Link to="#">
+                      <Link to="users">
                           <div className="flex justify-between items-center cursor-pointer hover:text-gray-300">
                               <span>All Users</span>
                           </div>

@@ -9,7 +9,7 @@ import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
 import authReducer from "../features/Slice/authSlice"
-
+import usersReducer from "../features/Slice/UsersSlice/getUsersSlice"
 
 const persistConfig = {
     key: "Riaz Admin",
@@ -28,7 +28,8 @@ const persistConfig = {
 };
 
 const reducer = combineReducers({
-  auth: authReducer   
+  auth: authReducer,
+  user: usersReducer   
 })
 
 const rootReducer = (state, action) => {
