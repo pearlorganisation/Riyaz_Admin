@@ -12,7 +12,7 @@ const Pagination = ({ paginate, currentPage, totalPages, handlePageClick }) => {
                     Showing
                     <span className="font-semibold text-gray-900 dark:text-white ml-2 mr-2">
                         {paginate?.limit * (currentPage - 1) + 1} -
-                        {Math.min(paginate?.limit * currentPage, paginate?.count)}
+                        {Math.min(paginate?.limit * currentPage, paginate?.count ?? paginate?.total)}
                     </span>
                     of
                     <span className="font-semibold text-gray-900 dark:text-white ml-2">

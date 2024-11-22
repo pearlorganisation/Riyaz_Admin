@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import Layout from "../components/Layouts/Layout"
 import Users from "../pages/Users/users";
 import Contacts from "../pages/Contacts/Contacts";
+import Bookings from "../pages/Bookings/Bookings";
+import Reviews from "../pages/Reviews/Reviews";
 export const AppRoutes = () => {
   const { isAdminLoggedIn } = useSelector((state) => state?.auth);
 
@@ -14,9 +16,11 @@ export const AppRoutes = () => {
       element:isAdminLoggedIn ? <Layout /> :  <Login />,
       children: isAdminLoggedIn ?
         [
-          { index: true, element: <Dashboard /> },
+          {index: true, element: <Dashboard />},
           {path:"users", element:<Users />},
-          {path:"contacts", element:<Contacts />}
+          {path:"contacts", element:<Contacts />},
+          {path:"bookings", element:<Bookings />},
+          {path:"reviews", element:<Reviews />}
         ]:[]
     },
   ]);

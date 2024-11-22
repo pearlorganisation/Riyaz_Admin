@@ -40,8 +40,8 @@ const Contacts = () => {
         });
     };
   return (
-      <main className="flex-1 p-8 mt-16 ml-64">
-          <div>Contacts</div>
+      <main className="flex-1 p-8 mt-16 ml-64 bg-red-100">
+          <div className='text-4xl font-semibold p-2'>Contacts</div>
           <div>
 
               <div className="grid gap-6">

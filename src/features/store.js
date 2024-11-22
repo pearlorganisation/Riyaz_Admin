@@ -11,6 +11,8 @@ import persistStore from "redux-persist/es/persistStore";
 import authReducer from "../features/Slice/authSlice"
 import usersReducer from "../features/Slice/UsersSlice/getUsersSlice"
 import contactsReducer from "../features/Slice/ContactsSlice/contactSlice"
+import bookingReducer from "../features/Slice/BookingsSlice/bookingsSlice"
+import reviewsReducer from "../features/Slice/ReviewsSlice/reviewsSlice"
 const persistConfig = {
     key: "Riaz Admin",
     version: 1,
@@ -30,8 +32,9 @@ const persistConfig = {
 const reducer = combineReducers({
   auth: authReducer,
   user: usersReducer,
-  contacts: contactsReducer
-     
+  contacts: contactsReducer,
+  bookings: bookingReducer,
+  reviews: reviewsReducer     
 })
 
 const rootReducer = (state, action) => {
