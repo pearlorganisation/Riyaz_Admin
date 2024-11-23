@@ -20,3 +20,26 @@ export const getReviews = createAsyncThunk(
         }
     }
 )
+
+
+/**------------------To Delete a Review------------------------------*/
+
+export const deleteReview = createAsyncThunk(
+    "delete/review",async(id,{ rejectWithValue})=>{
+        try {
+            const config ={
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            }
+        const {data} = await axiosInstance.delete(`/reviews/${id}`,config);
+        return data; 
+        } catch (error) {
+          if (error.response && error.response.data.message) {
+              return rejectWithValue(error.response.data.message);
+          } else {
+              return rejectWithValue(error.message);
+          }
+        }
+    }
+)

@@ -1,12 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getReviews } from "../../Action/ReviewsAction/reviewsAction"
+import { deleteReview, getReviews } from "../../Action/ReviewsAction/reviewsAction"
 import { toast } from "sonner"
 
 const initialState={
     isLoading: false,
     isError: false,
     isSuccess:false,
-    reviewInfo:{}
+    reviewInfo:{},
+    deleteReviewInfo:{
+        isLoading: false,
+        isError: false,
+        isSuccess: false,}
 }
 
 const reviewSlice = createSlice({
@@ -31,6 +35,26 @@ const reviewSlice = createSlice({
             state.reviewInfo = action.payload.data;
             toast.success("All reviews fetched",{position:"top-right"})
         })
+        .addCase(deleteReview.pending,(state)=>{
+            state.deleteReviewInfo = state.deleteReviewInfo ?? {};
+            state.deleteReviewInfo.isLoading = true
+        })
+        .addCase(deleteReview.rejected,(state,action)=>{
+            state.deleteReviewInfo = state.deleteReviewInfo ?? {};
+            state.deleteReviewInfo.isLoading = false;
+            state.deleteReviewInfo.isError = true;
+            state.deleteReviewInfo.isSuccess = false;
+            toast.error(action.payload,{position:"top-right"})
+        })
+         .addCase(deleteReview.fulfilled, (state, action) => {
+             state.deleteReviewInfo = state.deleteReviewInfo ?? {};
+             state.deleteReviewInfo.isLoading = false;
+             state.deleteReviewInfo.isError = false;
+             state.deleteReviewInfo.isSuccess = true;
+             toast.success("Deleted the Review", {
+                 position: "top-right"
+             })
+         })
     }
 })
 

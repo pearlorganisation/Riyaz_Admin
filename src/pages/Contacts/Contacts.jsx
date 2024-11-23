@@ -1,13 +1,31 @@
 import React, { useEffect, useState } from 'react'
+import { MdOutlineDelete } from "react-icons/md";
 import { Clock, Mail, MapPin, MessageSquare, User, Users, PhoneCall } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux'
-import { getContacts } from '../../features/Action/Contacts/contactAction';
+import { deleteContact, getContacts } from '../../features/Action/Contacts/contactAction';
 import Pagination from '../../components/Pagination/Pagination';
+import { useAsyncError } from 'react-router-dom';
+import ConfirmDeleteModal from '../../components/Modals/ConfirmDeleteModal';
 
 const Contacts = () => {
     const dispatch = useDispatch();
     const { contactsInfo, paginate } = useSelector((state)=> state.contacts)
     
+    // state for holding the state to delete a contact
+    const [contactId, setContactId] = useState(null)
+    const [openDeleteModal, setOpenDeletModal] = useState(false);
+
+    const handleDelete = (id)=>{
+      setContactId(id);
+      setOpenDeletModal(true)
+    }
+
+    const confirmDelete =()=>{
+        dispatch(deleteContact(contactId));
+        dispatch(getContacts({page:currentPage}));
+        setOpenDeletModal(false);
+    }
+
     //state for setting the page
     const [currentPage, setCurrentPage] = useState(1);
     // calculate total pages
@@ -50,9 +68,11 @@ const Contacts = () => {
                           key={contact?._id}
                           className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 p-6 border border-gray-100"
                       >
+                        
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            
                               <div className="space-y-4">
-                                  <div className="flex items-center space-x-3">
+                                   <div className="flex items-center space-x-3">
                                       <div className="p-2 bg-blue-50 rounded-lg">
                                           <User className="text-blue-600" size={20} />
                                       </div>
@@ -86,15 +106,23 @@ const Contacts = () => {
                             
 
                               <div className="space-y-4">
-                                  
-
                                   <div className="flex items-start space-x-3">
                                       <div className="p-2 bg-blue-50 rounded-lg mt-1">
                                           <MessageSquare className="text-blue-600" size={20} />
+
                                       </div>
                                       <div>
                                           <p className="text-sm text-gray-500 font-medium">Message</p>
                                           <p className="font-semibold text-gray-800 break-words">{contact.message}</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div className="space-y-4">
+                                  <div className="flex justify-end space-x-3">
+                                      <div className="p-2 bg-blue-50 rounded-lg mt-1">
+                                        <button onClick={()=>handleDelete(contact?._id)} >
+                                              <MdOutlineDelete className="text-red-600" size={20} />
+                                        </button>
                                       </div>
                                   </div>
                               </div>
@@ -110,6 +138,7 @@ const Contacts = () => {
               totalPages={totalPages}
               handlePageClick={handlePageClick}
           />
+          {openDeleteModal && (<><ConfirmDeleteModal confirmDelete={confirmDelete} setShowDeleteModal={setOpenDeletModal} /></>)}
       </main>
    )
 }

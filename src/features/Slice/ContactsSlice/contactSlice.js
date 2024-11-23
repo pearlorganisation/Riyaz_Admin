@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getContacts } from "../../Action/Contacts/contactAction"
+import { deleteContact, getContacts } from "../../Action/Contacts/contactAction"
 import { toast } from "sonner"
 
 const initialState ={
@@ -7,7 +7,12 @@ const initialState ={
     isError: false,
     isSuccess: false,
     contactsInfo:{},
-    paginate:{}
+    paginate:{},
+    deleteContact:{
+         isLoading: false,
+         isError: false,
+         isSuccess: false,
+        }
 }
 
 const contactSlice = createSlice({
@@ -32,6 +37,24 @@ const contactSlice = createSlice({
             state.contactsInfo = action.payload.data;
             state.paginate = action.payload.pagination;
             toast.success("Retrieved all the contacts",{position:"top-right"})
+        })
+        .addCase(deleteContact.pending,(state)=>{
+            state.deleteContact = state.deleteContact ?? {};
+            state.deleteContact.isLoading= true
+        })
+        .addCase(deleteContact.rejected,(state,action)=>{
+            state.deleteContact = state.deleteContact ?? {};
+            state.deleteContact.isLoading = false;
+            state.deleteContact.isError= true;
+            state.deleteContact.isSuccess = false;
+            toast.error(action.payload,{position:"top-right"})
+        })
+        .addCase(deleteContact.fulfilled,(state,action)=>{
+            state.deleteContact = state.deleteContact ?? {};
+            state.deleteContact.isLoading = false;
+            state.deleteContact.isError = false;
+            state.deleteContact.isSuccess = true;
+            toast.success("Successfully deleted the contact",{position:"top-center"})
         })
     }
 })

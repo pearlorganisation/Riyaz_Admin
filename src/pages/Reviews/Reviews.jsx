@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getReviews } from '../../features/Action/ReviewsAction/reviewsAction';
 import { Car, Star, Calendar, MapPin, MessageSquare } from 'lucide-react';
-
+import { deleteReview } from '../../features/Action/ReviewsAction/reviewsAction';
+import { MdOutlineDelete } from "react-icons/md";
+import ConfirmDeleteModal from "../../components/Modals/ConfirmDeleteModal"
 const Reviews = () => {
     const dispatch = useDispatch();
     const { reviewInfo } = useSelector((state)=>state.reviews);
@@ -21,6 +23,22 @@ const Reviews = () => {
             />
         ));
     };
+/**--------------------------------------------deleting review logic----------------------------------------------------- */
+// state for holding the id of review and opening the modal
+const [reviewId, setReviewId] = useState(null);
+const [openModal, setOpenModal] = useState(false);
+
+const handleDelete =(id)=>{
+    setReviewId(id);
+    setOpenModal(true)
+}
+
+const confirmDelete = ()=>{
+    dispatch(deleteReview(reviewId));
+    dispatch(getReviews());
+    setOpenModal(false)
+}
+
   return (
     <main className="flex-1 p-8 mt-16 ml-64">
       <div>Reviews</div>
@@ -30,7 +48,10 @@ const Reviews = () => {
                       <div
                           key={review?._id}
                           className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 p-6 border border-gray-100"
-                      >
+                      ><div className='flex w-full justify-end'>
+                              <button className='text-red-200 hover:text-red-500' onClick={()=>handleDelete(review?._id)}><MdOutlineDelete size={24} /></button> 
+                      </div>
+                           
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                               {/* Vehicle Information */}
                               <div className="space-y-4">
@@ -116,12 +137,19 @@ const Reviews = () => {
                                           <p className="font-semibold text-gray-800">${review?.vehicleId?.price}</p>
                                       </div>
                                   </div>
+                                  
                               </div>
+                              
                           </div>
+                           
                       </div>
+                      
                   ))}
               </div>
       </div>
+      {openModal && (
+        <ConfirmDeleteModal confirmDelete={confirmDelete} setShowDeleteModal={setOpenModal} />
+      )}
     </main>
   )
 }
