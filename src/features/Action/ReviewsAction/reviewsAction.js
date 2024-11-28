@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../../services/axiosInterceptor";
 export const getReviews = createAsyncThunk(
-    "get/allReviews",async(_,{rejectWithValue})=>{
+    "get/allReviews",async(params,{rejectWithValue})=>{
         try {
             const config ={
                 headers:{
                     "Content-Type":"applcation/json"
-                }
+                },
+                params // accepting params
             }
             const {data} = await axiosInstance(`/reviews/allreviews`,config)
             console.log('---------reviews data',data)
