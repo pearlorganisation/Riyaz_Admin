@@ -13,6 +13,7 @@ import usersReducer from "../features/Slice/UsersSlice/getUsersSlice"
 import contactsReducer from "../features/Slice/ContactsSlice/contactSlice"
 import bookingReducer from "../features/Slice/BookingsSlice/bookingsSlice"
 import reviewsReducer from "../features/Slice/ReviewsSlice/reviewsSlice"
+import vehicleReducer from "../features/Slice/VehicleSlice/vehicleSlice"
 const persistConfig = {
     key: "Riaz Admin",
     version: 1,
@@ -34,7 +35,8 @@ const reducer = combineReducers({
   user: usersReducer,
   contacts: contactsReducer,
   bookings: bookingReducer,
-  reviews: reviewsReducer     
+  reviews: reviewsReducer,
+  vehicles: vehicleReducer     
 })
 
 const rootReducer = (state, action) => {

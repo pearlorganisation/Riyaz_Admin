@@ -7,6 +7,8 @@ import Users from "../pages/Users/users";
 import Contacts from "../pages/Contacts/Contacts";
 import Bookings from "../pages/Bookings/Bookings";
 import Reviews from "../pages/Reviews/Reviews";
+import VehiclesList from "../pages/Vehicles/VehiclesList";
+import AddVehicle from "../pages/Vehicles/AddVehicle";
 export const AppRoutes = () => {
   const { isAdminLoggedIn } = useSelector((state) => state?.auth);
 
@@ -20,7 +22,9 @@ export const AppRoutes = () => {
           {path:"users", element:<Users />},
           {path:"contacts", element:<Contacts />},
           {path:"bookings", element:<Bookings />},
-          {path:"reviews", element:<Reviews />}
+          {path:"reviews", element:<Reviews />},
+          {path:"vehicles", element:<VehiclesList />},
+          {path:"add-vehicle", element:<AddVehicle />}
         ]:[]
     },
   ]);

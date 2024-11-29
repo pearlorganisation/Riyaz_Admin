@@ -58,6 +58,24 @@ const Sidebar = () => {
                           </div>
                       </Link>
                   </div>
+
+                  {/**-----------------------------Vehicles List-------------------------------------*/}
+                  <div className="mb-4">
+                      <Link to="vehicles">
+                          <div className="flex justify-between items-center cursor-pointer hover:text-gray-300">
+                              <span>Vehicle List</span>
+                          </div>
+                      </Link>
+                  </div>
+
+                  {/**-----------------------------Add Vehicles-------------------------------------*/}
+                  <div className="mb-4">
+                      <Link to="add-vehicle">
+                          <div className="flex justify-between items-center cursor-pointer hover:text-gray-300">
+                              <span>Add Vehicle</span>
+                          </div>
+                      </Link>
+                  </div>
               </nav>
           </aside>
       </div>
