@@ -37,7 +37,7 @@ const VehicleCard = ({ vehicle }) => {
                     <Clock size={16} className="mr-2 text-purple-500" />
                     <span>{vehicle.pickupTime}</span>
                 </div>
-                <div className="flex items-center text-gray-600 font-semibold text-blue-600">
+                <div className="flex items-center text-gray-600 font-semibold">
                     <span>AED {vehicle.price}</span>
                 </div>
             </div>
