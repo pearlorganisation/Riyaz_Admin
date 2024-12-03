@@ -1,17 +1,38 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllVehicles } from '../../features/Action/Vehicles/vehicleAction';
-import { Star, Briefcase, Users, Clock, MapPin } from 'lucide-react';
+import { getAllVehicles, removeVehicle } from '../../features/Action/Vehicles/vehicleAction';
+import { Star, Briefcase, Users, Clock, MapPin, Trash } from 'lucide-react';
+import ConfirmDeleteModal from '../../components/Modals/ConfirmDeleteModal';
 const VehicleCard = ({ vehicle }) => {
+    const dispatch = useDispatch()
+    /** states for managing confirm delete */
+    const [selctedVehicleId, setSelectedVehicleId] = useState(null)
+    const [showDeleteModal,setDeleteModal] = useState(false)
+
+    // handle for opening the popup delete modal //
+    const handleOpenModal = (id)=>{
+        setSelectedVehicleId(id)
+        setDeleteModal(true)
+    }
+
+    const confirmDelete =()=>{
+        dispatch(removeVehicle(selctedVehicleId))
+        dispatch(getAllVehicles())
+        setDeleteModal(false);
+    }
+
     return (
         <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
             {/* Image */}
-            <div className="mb-4 h-48 overflow-hidden rounded-lg">
+             <div className="mb-4 h-48 overflow-hidden rounded-lg">
+                <div className='flex justify-end'><button onClick={()=>handleOpenModal(vehicle?._id)}><Trash size={20} color='red' /></button></div>
+               
                 <img
                     src={vehicle.images[0]?.secure_url || '/placeholder-image.png'}
                     alt={vehicle.vehicleName}
                     className="w-full h-full object-cover"
                 />
+                
             </div>
 
             {/* Vehicle Name and Rating */}
@@ -53,6 +74,10 @@ const VehicleCard = ({ vehicle }) => {
                     <span className="text-sm truncate">{vehicle.destination}</span>
                 </div>
             </div>
+            {/** confirm modal */}
+            {showDeleteModal && <>
+            <ConfirmDeleteModal confirmDelete={confirmDelete} setShowDeleteModal={setDeleteModal} />
+            </>}
         </div>
     );
 };
@@ -69,7 +94,7 @@ const VehiclesList = () => {
         <main className="flex-1 p-8 mt-16 ml-64">
             <h1 className="text-2xl font-bold mb-6">Available Vehicles</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {vehiclesData?.map((vehicle) => (
+                {Array.isArray(vehiclesData) && vehiclesData?.map((vehicle) => (
                     <VehicleCard key={vehicle._id} vehicle={vehicle} />
                 ))}
             </div>

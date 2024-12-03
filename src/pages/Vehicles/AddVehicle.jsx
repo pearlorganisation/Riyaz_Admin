@@ -230,6 +230,34 @@ const AddVehicle = () => {
           />
           {errors.ratings && <p className="text-red-500 text-sm mt-1">{errors.ratings.message}</p>}
         </div>
+        {/**  pickupLocation */}
+        <div className="mb-4">
+          <label htmlFor="pickupLocation" className="block text-sm font-medium text-gray-700">
+            Add Pickup Location
+          </label>
+          <input
+            type="text"
+            id="pickupLocation"
+            {...register("pickupLocation", { required: "Pickup location is required" })}
+            className={`mt-1 p-2 block w-full rounded-md border-2 ${errors.pickupLocation ? "border-red-500" : "border-gray-300"
+              } focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm`}
+          />
+          {errors.pickupLocation && <p className="text-red-500 text-sm mt-1">{errors.pickupLocation.message}</p>}
+        </div>
+        {/** destination */}
+        <div className="mb-4">
+          <label htmlFor="destination" className="block text-sm font-medium text-gray-700">
+            Add Destination
+          </label>
+          <input
+            type="text"
+            id="destination"
+            {...register("destination", { required: "destination is required" })}
+            className={`mt-1 p-2 block w-full rounded-md border-2 ${errors.destination ? "border-red-500" : "border-gray-300"
+              } focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm`}
+          />
+          {errors.destination && <p className="text-red-500 text-sm mt-1">{errors.destination.message}</p>}
+        </div>
         {/** images */}
         <div className="mb-6">
           <label htmlFor="images" className="block text-sm font-medium text-gray-700 mb-2">
