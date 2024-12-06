@@ -6,7 +6,8 @@ const initialState = {
     isLoading: false,
     isSuccess: false,
     isError: false,
-    vehiclesData:{}
+    vehiclesData:{},
+    paginationData:{}
 }
 
 const vehicleSlice = createSlice({
@@ -29,6 +30,7 @@ const vehicleSlice = createSlice({
             state.isSuccess= true
             state.isLoading = false
             state.vehiclesData = action.payload.data
+            state.paginationData = action.payload.pagination
             toast.success("All vehicles retrieved",{position:"top-right"})
         })
         .addCase(addVehicle.pending,(state)=>{

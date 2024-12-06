@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllVehicles, removeVehicle } from '../../features/Action/Vehicles/vehicleAction';
 import { Star, Briefcase, Users, Clock, MapPin, Trash } from 'lucide-react';
 import ConfirmDeleteModal from '../../components/Modals/ConfirmDeleteModal';
+import Pagination from '../../components/Pagination/Pagination';
 const VehicleCard = ({ vehicle }) => {
     const dispatch = useDispatch()
     /** states for managing confirm delete */
@@ -84,11 +85,21 @@ const VehicleCard = ({ vehicle }) => {
 
 const VehiclesList = () => {
     const dispatch = useDispatch();
-    const { vehiclesData } = useSelector((state) => state.vehicles);
+    const { vehiclesData, paginationData } = useSelector((state) => state.vehicles);
+   /**-------for managing current page--------------*/
+    const [currentPage, setCurrentPage] = useState(1);
 
+    const totalPages = Math.ceil(
+        paginationData?.total / paginationData?.pageSize
+    )
+ const handlePageChange=(page)=>{
+     if (page > 0 && page <= totalPages) {
+         setCurrentPage(page)
+     }
+ }
     useEffect(() => {
-        dispatch(getAllVehicles());
-    }, [dispatch]);
+        dispatch(getAllVehicles({page: currentPage}));
+    }, [dispatch, currentPage]);
 
     return (
         <main className="flex-1 p-8 mt-16 ml-64">
@@ -98,6 +109,7 @@ const VehiclesList = () => {
                     <VehicleCard key={vehicle._id} vehicle={vehicle} />
                 ))}
             </div>
+            <Pagination paginate={paginationData} currentPage={currentPage} totalPages={totalPages} handlePageClick={handlePageChange} />
             {vehiclesData?.length === 0 && (
                 <div className="text-center text-gray-500 mt-10">
                     No vehicles available

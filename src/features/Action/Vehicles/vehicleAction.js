@@ -2,14 +2,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../../services/axiosInterceptor";
 
 export const getAllVehicles = createAsyncThunk(
-    "get/allVehicles", async(_,{rejectWithValue})=>{
+    "get/allVehicles", async({page=1},{rejectWithValue})=>{
         try {
             const config = {
                 headers:{
                     "Content-Type":"application/json"
                 }
             }
-            const { data } = await axiosInstance.get(`/vehicles`,config);
+            const { data } = await axiosInstance.get(`/vehicles?page=${page}`,config);
             console.log('---------data of vehicle', data)
             return data;
         } catch (error) {
