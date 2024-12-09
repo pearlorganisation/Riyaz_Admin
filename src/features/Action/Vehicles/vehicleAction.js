@@ -77,3 +77,28 @@ export const removeVehicle = createAsyncThunk(
         }
     }
 )
+
+
+/**----------------------Action for getting a single vehicle--------------------------*/
+export const getVehicleById = createAsyncThunk(
+    "get/vehicleById",async(id,{rejectWithValue})=>{
+        try {
+            const config = {
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            }
+            const {
+                data
+            } = await axiosInstance.get(`/vehicles/${id}`,config)
+            console.log('=============single vehicle',data)
+            return data.data
+        } catch (error) {
+             if (error.response && error.response.data.message) {
+                 return rejectWithValue(error.response.data.message);
+             } else {
+                 return rejectWithValue(error.message);
+             }
+        }
+    }
+)

@@ -4,6 +4,11 @@ import { getAllVehicles, removeVehicle } from '../../features/Action/Vehicles/ve
 import { Star, Briefcase, Users, Clock, MapPin, Trash } from 'lucide-react';
 import ConfirmDeleteModal from '../../components/Modals/ConfirmDeleteModal';
 import Pagination from '../../components/Pagination/Pagination';
+import { Pencil } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+
+
 const VehicleCard = ({ vehicle , currentPage}) => {
     const dispatch = useDispatch()
     /** states for managing confirm delete */
@@ -26,7 +31,10 @@ const VehicleCard = ({ vehicle , currentPage}) => {
         <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
             {/* Image */}
              <div className="mb-4 h-48 overflow-hidden rounded-lg">
-                <div className='flex justify-end'><button onClick={()=>handleOpenModal(vehicle?._id)}><Trash size={20} color='red' /></button></div>
+                <div className='flex justify-end'>
+                    <button onClick={()=>handleOpenModal(vehicle?._id)}><Trash size={20} color='red' /></button>
+                    <Link to={`/update-vehicle/${vehicle?._id}`}><Pencil /></Link>
+                </div>
                
                 <img
                     src={vehicle.images[0]?.secure_url || '/placeholder-image.png'}
