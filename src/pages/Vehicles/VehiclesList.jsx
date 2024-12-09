@@ -4,7 +4,7 @@ import { getAllVehicles, removeVehicle } from '../../features/Action/Vehicles/ve
 import { Star, Briefcase, Users, Clock, MapPin, Trash } from 'lucide-react';
 import ConfirmDeleteModal from '../../components/Modals/ConfirmDeleteModal';
 import Pagination from '../../components/Pagination/Pagination';
-const VehicleCard = ({ vehicle }) => {
+const VehicleCard = ({ vehicle , currentPage}) => {
     const dispatch = useDispatch()
     /** states for managing confirm delete */
     const [selctedVehicleId, setSelectedVehicleId] = useState(null)
@@ -18,7 +18,7 @@ const VehicleCard = ({ vehicle }) => {
 
     const confirmDelete =()=>{
         dispatch(removeVehicle(selctedVehicleId))
-        dispatch(getAllVehicles())
+        dispatch(getAllVehicles({page:currentPage}))
         setDeleteModal(false);
     }
 
@@ -106,7 +106,7 @@ const VehiclesList = () => {
             <h1 className="text-2xl font-bold mb-6">Available Vehicles</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {Array.isArray(vehiclesData) && vehiclesData?.map((vehicle) => (
-                    <VehicleCard key={vehicle._id} vehicle={vehicle} />
+                    <VehicleCard key={vehicle._id} currentPage={currentPage} vehicle={vehicle} />
                 ))}
             </div>
             <Pagination paginate={paginationData} currentPage={currentPage} totalPages={totalPages} handlePageClick={handlePageChange} />
