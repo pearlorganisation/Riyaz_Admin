@@ -6,6 +6,7 @@ import { deleteReview } from '../../features/Action/ReviewsAction/reviewsAction'
 import { MdOutlineDelete } from "react-icons/md";
 import ConfirmDeleteModal from "../../components/Modals/ConfirmDeleteModal"
 import { useLocation, useNavigate } from 'react-router-dom';
+import Pagination from '../../components/Pagination/Pagination';
 // filter for reviews by stars
 const ratingsTypes = [
     {
@@ -40,11 +41,17 @@ const sortTypes = [
 
 const Reviews = () => {
     const dispatch = useDispatch();
-    const { reviewInfo } = useSelector((state)=>state.reviews);
-    useEffect(()=>{
-        dispatch(getReviews())
-    },[]);
+    const { reviewInfo, paginatedData } = useSelector((state)=>state.reviews);
+   
+    const totalPages = Math.ceil(paginatedData?.total / paginatedData?.limit)
 
+    const [currentPage, setCurrentPage] = useState(1)
+    const handlePageChange =(page)=>{
+        if (page > 0 && page <= totalPages) {
+            setCurrentPage(page)
+        }
+    }
+console.log('------------total pages',totalPages)
     const renderStars = (rating) => {
         return [...Array(5)].map((_, index) => (
             <Star
@@ -83,11 +90,11 @@ const Reviews = () => {
    const handleSortBy=(sortValue)=>{
     setSortBy(sortValue);
    }
-   useEffect(()=>{
-    dispatch(getReviews({
-        sortBy:sortBy
-    }))
-   },[sortBy])
+//    useEffect(()=>{
+//     dispatch(getReviews({
+//         sortBy:sortBy
+//     }))
+//    },[sortBy])
   
    console.log("============sortby value",sortBy)
    useEffect(()=>{
@@ -109,9 +116,10 @@ const Reviews = () => {
    // dispatching with the search params
    dispatch(getReviews({
     rating: selectedRatingTypes,
+    sortBy:sortBy
      
    }))
-   },[navigate, location,dispatch, selectedRatingTypes])
+   },[location, selectedRatingTypes, sortBy])
 
 
 /**--------------------------------------------deleting review logic----------------------------------------------------- */
@@ -284,7 +292,7 @@ const confirmDelete = ()=>{
                   </div>
               ))}
           </div>
-
+          <Pagination paginate={paginatedData} currentPage={currentPage} totalPages={totalPages} handlePageClick={handlePageChange} />
           {openModal && (
               <ConfirmDeleteModal confirmDelete={confirmDelete} setShowDeleteModal={setOpenModal} />
           )}

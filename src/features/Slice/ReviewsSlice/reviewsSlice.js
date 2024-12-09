@@ -10,7 +10,8 @@ const initialState={
     deleteReviewInfo:{
         isLoading: false,
         isError: false,
-        isSuccess: false,}
+        isSuccess: false,},
+    paginatedData:{}
 }
 
 const reviewSlice = createSlice({
@@ -33,6 +34,7 @@ const reviewSlice = createSlice({
             state.isError= false
             state.isSuccess= true
             state.reviewInfo = action.payload.data;
+            state.paginatedData = action.payload.pagination
             toast.success("All reviews fetched",{position:"top-right"})
         })
         .addCase(deleteReview.pending,(state)=>{

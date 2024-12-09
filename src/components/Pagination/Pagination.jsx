@@ -16,7 +16,7 @@ const Pagination = ({ paginate, currentPage, totalPages, handlePageClick }) => {
                     </span>
                     of
                     <span className="font-semibold text-gray-900 dark:text-white ml-2">
-                        {paginate?.count ?? paginate?.total}
+                        {paginate?.count}
                     </span>
                 </span>
 
