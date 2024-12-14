@@ -31,7 +31,7 @@ const VehicleCard = ({ vehicle , currentPage}) => {
         <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
             {/* Image */}
              <div className="mb-4 h-48 overflow-hidden rounded-lg">
-                <div className='flex justify-end'>
+                <div className='flex justify-end gap-2 pb-2'>
                     <button onClick={()=>handleOpenModal(vehicle?._id)}><Trash size={20} color='red' /></button>
                     <Link to={`/update-vehicle/${vehicle?._id}`}><Pencil /></Link>
                 </div>
