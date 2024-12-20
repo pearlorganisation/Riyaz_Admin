@@ -84,8 +84,8 @@ const UpdateVehicle = () => {
                 price: singleVehicle.price,
                 pickupLocation: singleVehicle.pickupLocation,
                 destination: singleVehicle.destination,
-                'ratings.averageRating': singleVehicle.ratings.averageRating,
-                'ratings.numberOfRatings': singleVehicle.ratings.numberOfRatings
+                'ratings.averageRating': singleVehicle?.ratings?.averageRating ?? "",
+                'ratings.numberOfRatings': singleVehicle?.ratings?.numberOfRatings ?? ""
             });
 
             // Set existing images from singleVehicle
@@ -122,10 +122,10 @@ const UpdateVehicle = () => {
                     <div className="flex items-center space-x-2">
                         <span className="text-lg font-semibold">Current Rating:</span>
                         <span className="text-yellow-500 text-xl">
-                            {singleVehicle.ratings.averageRating.toFixed(1)}
+                            {singleVehicle?.ratings?.averageRating.toFixed(1)}
                         </span>
                         <span className="text-gray-500">
-                            ({singleVehicle.ratings.numberOfRatings} ratings)
+                            ({singleVehicle?.ratings?.numberOfRatings} ratings)
                         </span>
                     </div>
                 </div>
@@ -149,7 +149,7 @@ const UpdateVehicle = () => {
                                 {...register('serviceType', { required: 'Service Type is required' })}
                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
                             >
-                                {ServiceType.map((type) => (
+                                {ServiceType?.map((type) => (
                                     <option key={type.id} value={type.serviceName}>
                                         {type.serviceName}
                                     </option>
@@ -165,7 +165,7 @@ const UpdateVehicle = () => {
                                 {...register('vehicleType', { required: 'Vehicle Type is required' })}
                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
                             >
-                                {VehicleType.map((type) => (
+                                {VehicleType?.map((type) => (
                                     <option key={type.id} value={type.vehicleName}>
                                         {type.vehicleName}
                                     </option>
@@ -181,7 +181,7 @@ const UpdateVehicle = () => {
                                 {...register('vehicleClass', { required: 'Vehicle Class is required' })}
                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
                             >
-                                {VehicleClass.map((cls) => (
+                                {VehicleClass?.map((cls) => (
                                     <option key={cls.id} value={cls.className}>
                                         {cls.className}
                                     </option>
